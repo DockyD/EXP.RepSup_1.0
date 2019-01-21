@@ -11,8 +11,8 @@ G.locBlock.oddballDur = 0.1;
 G.locBlock.stimDurPostOddball = 0.1;
 G.locBlock.ISI = [.8 1.2];
 
-G.locBlock.nNormal = [36, 36];        % Per stimulus
-G.locBlock.nOddball = [4, 4];        % Per stimulus
+G.locBlock.nNormal = [100, 100];        % Per stimulus
+G.locBlock.nOddball = [10, 10];        % Per stimulus
 
 % Eye-tracker block
 [gridX, gridY] = meshgrid(-2:2);

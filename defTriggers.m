@@ -2,13 +2,13 @@ function triggers = defTriggers()
 
 triggers = [];
 
-triggers.mainBlock.preFixOn = 10; 
-triggers.mainBlock.stim1On = 20; 
-triggers.mainBlock.tempGapOn = 30;
-triggers.mainBlock.stim2On = 40; 
-triggers.mainBlock.postFixOn = 50;
-triggers.mainBlock.postBlankOn = 60;
-  
+% triggers.mainBlock.preFixOn = 10; 
+% triggers.mainBlock.stim1On = 20; 
+% triggers.mainBlock.tempGapOn = 30;
+% triggers.mainBlock.stim2On = 40; 
+% triggers.mainBlock.postFixOn = 50;
+% triggers.mainBlock.postBlankOn = 60;
+
 %%%%%%%%%%%%%triggers.maskblock
 %triggers for masks and triggers for high/low contrast stimuli
 
