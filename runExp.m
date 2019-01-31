@@ -202,7 +202,7 @@ for iBlock = 1:G.nBlock
             cfg = [];
             cfg.nNormal = G.locBlock.nNormal;
             cfg.nOddball = G.locBlock.nOddball;
-            [G.dataFile{iBlock}, G.logFile{iBlock}] = locBlock(cfg);
+            [G.dataFile{iBlock}, G.logFile{iBlock}] = contBlock(cfg);
         case 'mask'
             DrawFormattedText(G.pWindow, sprintf('Block %g/%g\n\n\nPress any button to begin.', iBlock, G.nBlock), 'center', 'center', G.textColor);
             Screen('Flip', G.pWindow);
@@ -217,7 +217,7 @@ for iBlock = 1:G.nBlock
             cfg.nOddball = G.mainBlock.nOddball;
 
             cfg.tempGap = G.blockType{iBlock}{2};          % In seconds
-            [G.dataFile{iBlock}, G.logFile{iBlock}] = mainBlock(cfg);
+            [G.dataFile{iBlock}, G.logFile{iBlock}] = maskBlock(cfg);
     end
     
     DrawFormattedText(G.pWindow, sprintf('You just finished block %g/%g!\n\nFeel free to take a quick break.\n\n\n\nPress the button to see the next instructions...', iBlock, G.nBlock), 'center', 'center', G.textColor);
