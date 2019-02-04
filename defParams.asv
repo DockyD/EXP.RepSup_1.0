@@ -14,7 +14,7 @@ G.locBlock.ISI = [.8 1.2];
 % using carryoverCounterbalance(4,1,7,0) for four trial types (images A/B
 % and mask/unmask etc) we get 113 trials per block. 12 oddball trials as 12
 % is divisible by 4 thus 3 oddballs per factor, leaves us with even trial
-% numbers.
+% numbers. could
 G.locBlock.nNormal = [101, 101];        % Per stimulus
 G.locBlock.nOddball = [12, 12];        % Per stimulus
 
