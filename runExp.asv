@@ -186,23 +186,33 @@ for iBlock = 1:G.nBlock
     
     switch G.blockType{iBlock}{1};
         case 'cont'
+            DrawFormattedText(G.pWindow, sprintf('Block %g/%g\n\n\nPress any button to begin.', iBlock, G.nBlock), 'center', 'center', G.textColor);
+            Screen('Flip', G.pWindow);
+            
+            pause(0.5); 
+            cfg = [];
+            cfg.endTime = inf;
+			cfg.validKeys = G.validKeys;
+            getResponse(cfg);
+
             cfg = [];
             cfg.nNormal = G.contBlock.nNormal;
             cfg.nOddball = G.contBlock.nOddball;
             [G.dataFile{iBlock}, G.logFile{iBlock}] = contBlock(cfg);
         case 'mask'
-%             DrawFormattedText(G.pWindow, sprintf('Block %g/%g\n\n\nPress any button to begin.', iBlock, G.nBlock), 'center', 'center', G.textColor);
-%             Screen('Flip', G.pWindow);
-% 
-%             pause(0.5); 
-%             cfg = [];
-%             cfg.endTime = inf;
-% 			  cfg.validKeys = G.validKeys;
-%             getResponse(cfg);
+            DrawFormattedText(G.pWindow, sprintf('Block %g/%g\n\n\nPress any button to begin.', iBlock, G.nBlock), 'center', 'center', G.textColor);
+            Screen('Flip', G.pWindow);
+
+            pause(0.5); 
             cfg = [];
+            cfg.endTime = inf;
+			cfg.validKeys = G.validKeys;
+            getResponse(cfg);
+
             cfg.nNormal = G.maskBlock.nNormal;
             cfg.nOddball = G.maskBlock.nOddball;
-%             cfg.tempGap = G.blockType{iBlock}{2};          % In seconds
+
+            cfg.tempGap = G.blockType{iBlock}{2};          % In seconds
             [G.dataFile{iBlock}, G.logFile{iBlock}] = maskBlock(cfg);
     end
     
