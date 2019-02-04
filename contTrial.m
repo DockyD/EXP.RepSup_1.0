@@ -15,7 +15,12 @@ log.cfg0 = cfg0;
 log.onsets = [];
 
 %% Present stimulus before oddball
-pStim = Screen('MakeTexture', G.pWindow, G.stim2{cfg0.stim});
+if cfg0.cont
+    pStim = Screen('MakeTexture', G.pWindow, G.stim2{cfg0.stim},[255,255,255,100]);
+else
+    pStim = Screen('MakeTexture', G.pWindow, G.stim2{cfg0.stim});
+end
+
 Screen('DrawTexture', G.pWindow, pStim);
 
 % Superimpose fixation
@@ -30,7 +35,7 @@ log.onsets = [log.onsets, time];
 nextOnset = time + G.locBlock.stimDurPreOddball;
 
 %% Present stimulus and oddball
-Screen('DrawTexture', G.pWindow, pStim, alpha = 0.2);%%%%%%%%%%%%%%%%%%%%%%
+Screen('DrawTexture', G.pWindow, pStim2);
 
 % Superimpose fixation
 Screen('DrawDots', G.pWindow, [0, 0], G.fixDotSize*G.pixPerDeg, 0, G.screenCenter, 1);

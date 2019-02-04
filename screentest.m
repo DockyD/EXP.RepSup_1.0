@@ -11,6 +11,8 @@
         G.curSubj = 1;
         tmp = load([G.subjCfgPath, 'subjCfg', num2str(G.curSubj), '.mat']);
         G.subjCfg = tmp.subjCfg;
+        
+        Screen('BlendFunction', theWindow, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         allScreens = Screen('Screens');
         G.pWindow = Screen('OpenWindow', allScreens(1), G.BGcolor);
