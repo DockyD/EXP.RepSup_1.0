@@ -69,7 +69,7 @@ for in = 1:nTrial
     cfg.nextOnset = nextOnset;
     cfg.ISI = log.ISI(in);
     
-	[trialData, log.trial{in}] = locTrial(cfg);
+	[trialData, log.trial{in}] = contTrial(cfg);
 
     nextOnset = log.trial{in}.lastOnset + log.ISI(in);
 

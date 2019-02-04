@@ -1,0 +1,32 @@
+
+
+    Screen('Preference', 'SkipSyncTests', 1);
+    G = [];
+    G.maxWhite = 42;
+    G.BGcolor = G.maxWhite;  
+    G.objPath = 'Stimuli/ObjectsMEG/';
+    G.subjCfgPath = 'subjCfg/';
+    G.curSubj = 1;
+    tmp = load([G.subjCfgPath, 'subjCfg', num2str(G.curSubj), '.mat']);
+    G.subjCfg = tmp.subjCfg;
+
+    allScreens = Screen('Screens');
+    G.pWindow = Screen('OpenWindow', allScreens(1), G.BGcolor);
+    time = Screen('Flip', G.pWindow, 2);
+
+
+    G.stim2 = cell(2, 1);       % Second stimulus: B and D
+
+    G.stim2{1} = double(imread([G.objPath, G.subjCfg.stimFiles.B{1}])) * (G.maxWhite/255);
+    G.stim2{2} = double(imread([G.objPath, G.subjCfg.stimFiles.B{2}])) * (G.maxWhite/255);
+    
+
+    pStim = Screen('MakeTexture', G.pWindow, G.stim2{cfg0.stim});
+    Screen('DrawTexture', G.pWindow, pStim);
+    screen(window,'Flip')
+    wait
+    time = Screen('Flip', G.pWindow);
+    sca
+    %Screen('Close', pStim);
+    %G.B.close();
+

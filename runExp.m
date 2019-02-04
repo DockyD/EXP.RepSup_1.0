@@ -1,4 +1,4 @@
-%main script to run experiment
+f%main script to run experiment
 clear all;
 
 global G;
@@ -11,7 +11,7 @@ KbName('UnifyKeyNames');
 %% 2.1. Default stuff
 G.MEG = 1; %may be useful for debugging/piloting?
 
-G.B = BitsiPim('COM1');
+% G.B = BitsiPim('COM1');%
 G.validKeys = ['a']; 
 G.distToScreen = .8;
 G.screenWidth = .487;
@@ -87,6 +87,7 @@ loadSubjCfg;
 loadStimuli;
 
 % Define blocks
+% of blocks subject to change
 if (G.subjCfg.Order == 0)
     G.blockType = { ...
         {'cont'}; ...

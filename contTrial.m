@@ -1,4 +1,4 @@
-function [data, log] = rsTrial(cfg0)
+function [data, log] = contTrial(cfg0)
 
 global G;
 
@@ -30,7 +30,7 @@ log.onsets = [log.onsets, time];
 nextOnset = time + G.locBlock.stimDurPreOddball;
 
 %% Present stimulus and oddball
-Screen('DrawTexture', G.pWindow, pStim, alpha = 0.2);
+Screen('DrawTexture', G.pWindow, pStim, alpha = 0.2);%%%%%%%%%%%%%%%%%%%%%%
 
 % Superimpose fixation
 Screen('DrawDots', G.pWindow, [0, 0], G.fixDotSize*G.pixPerDeg, 0, G.screenCenter, 1);
