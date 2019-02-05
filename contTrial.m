@@ -84,20 +84,6 @@ G.B.sendTrigger(G.triggers.locBlock.stimOff);
 time = Screen('Flip', G.pWindow, nextOnset - G.flipLag);
 log.onsets = [log.onsets, time];
 
-%{
-%% Present mask
-if cfg0.mask == 1  
-    % present mask   
-else
-    Screen('DrawDots', G.pWindow, [0, 0], G.fixDotSize*G.pixPerDeg, 0, G.screenCenter, 1);
-    Screen('DrawDots', G.pWindow, [0, 0], 0.5*G.fixDotSize*G.pixPerDeg, G.fixDotColor, G.screenCenter, 1);
-end
-
-% Flip for offset
-Screen('DrawDots', G.pWindow, [0, 0], G.fixDotSize*G.pixPerDeg, 0, G.screenCenter, 1);
-Screen('DrawDots', G.pWindow, [0, 0], 0.5*G.fixDotSize*G.pixPerDeg, G.fixDotColor, G.screenCenter, 1);
-%}
-
 if isnan(data.resp)
     cfg = [];
     cfg.validKeys = G.validKeys;

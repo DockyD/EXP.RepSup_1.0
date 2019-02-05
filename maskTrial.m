@@ -1,4 +1,4 @@
-function [data, log] = rsTrial(cfg0)
+function [data, log] = maskTrial(cfg0)
 
 global G;
 
@@ -71,22 +71,38 @@ if isnan(data.resp)
     [data.resp, log.respTime] = getResponse(cfg);
 end
 
-%% Present post-stimulus fixation dot
-Screen('DrawDots', G.pWindow, [0, 0], G.fixDotSize*G.pixPerDeg, 0, G.screenCenter, 1);
-Screen('DrawDots', G.pWindow, [0, 0], 0.5*G.fixDotSize*G.pixPerDeg, G.fixDotColor, G.screenCenter, 1);
 
-G.B.sendTrigger(G.triggers.locBlock.stimOff);
-time = Screen('Flip', G.pWindow, nextOnset - G.flipLag);
-log.onsets = [log.onsets, time];
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%{
 %% Present mask
-if cfg0.mask == 1  
-    % present mask   
-else
+if cfg0.mask
+    G.B.sendTrigger(G.triggers.locBlock.mask);
+    for i in 10
+        mStim = Screen('MakeTexture', G.pWindow, G.stim2{cfg0.stim});
+        Screen('DrawTexture', G.pWindow, mStim);
+        Screen('DrawDots', G.pWindow, [0, 0], G.fixDotSize*G.pixPerDeg, 0, G.screenCenter, 1);
+        Screen('DrawDots', G.pWindow, [0, 0], 0.5*G.fixDotSize*G.pixPerDeg, G.fixDotColor, G.screenCenter, 1);
+        nextOnset = time + 0.5;
+        time = Screen('Flip', G.pWindow,nextOnset- g.flipLag);
+    %% Present post-stimulus fixation dot minus mask time length
     Screen('DrawDots', G.pWindow, [0, 0], G.fixDotSize*G.pixPerDeg, 0, G.screenCenter, 1);
     Screen('DrawDots', G.pWindow, [0, 0], 0.5*G.fixDotSize*G.pixPerDeg, G.fixDotColor, G.screenCenter, 1);
+
+    G.B.sendTrigger(G.triggers.locBlock.stimOff);
+    time = Screen('Flip', G.pWindow, nextOnset - G.flipLag - 0.5);
+    log.onsets = [log.onsets, time];
+
+else
+    %% Present post-stimulus fixation dot
+    Screen('DrawDots', G.pWindow, [0, 0], G.fixDotSize*G.pixPerDeg, 0, G.screenCenter, 1);
+    Screen('DrawDots', G.pWindow, [0, 0], 0.5*G.fixDotSize*G.pixPerDeg, G.fixDotColor, G.screenCenter, 1);
+
+    G.B.sendTrigger(G.triggers.locBlock.stimOff);
+    time = Screen('Flip', G.pWindow, nextOnset - G.flipLag);
+    log.onsets = [log.onsets, time];
 end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Flip for offset
 Screen('DrawDots', G.pWindow, [0, 0], G.fixDotSize*G.pixPerDeg, 0, G.screenCenter, 1);

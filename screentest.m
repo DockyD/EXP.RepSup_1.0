@@ -23,7 +23,7 @@
         
         pStim = Screen('MakeTexture', G.pWindow, G.stim2{1});
         Screen('DrawTexture', G.pWindow, pStim,[],[],0,0,.1);
-        time = Screen('Flip', G.pWindow);
+        time = Screen('Flip', G.pWindow,2);
         WaitSecs(2)
         Screen('DrawTexture', G.pWindow, pStim,[],[],[],[],1);
         time = Screen('Flip', G.pWindow);

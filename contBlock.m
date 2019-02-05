@@ -8,12 +8,51 @@ log.datestr = datestr(now, 'dd-mmm-yyyy_HH-MM-SS');
 log.interrupt = [];
 
 %% Generate stimulus conditions
-% Normals
+%%legend:   [imageA/B, OddBall, High/Low contrast]
+%%          Fact 1 = bin for image A, High Contrast
+%%          Fact 2 = bin for image B, low Contrast
+%%          Fact 3 = bin for image A, High Contrast, OddBall
+%%          Fact 4 = bin for image B, low Contrast, OddBall
+
 trialOrder = carryoverCounterbalance(4,1,7,0);
-fac1 = sum(trialOrder(:) == 1);
-fac2 = sum(trialOrder(:) == 2);
-fac3 = sum(trialOrder(:) == 3);
-fac4 = sum(trialOrder(:) == 4);
+
+fact1 = sum(trialOrder(:) == 1);
+fact2 = sum(trialOrder(:) == 2);
+fact3 = sum(trialOrder(:) == 3);
+fact4 = sum(trialOrder(:) == 4);
+
+fact1 = (repmat([1,0,0],(sum(trialOrder(4:) == 1)),1))...
+        +(repmat([1,1,0],3,1));
+
+fact2 = (repmat([2,0,0],(fact2-3),1))...
+        +(repmat([2,1,0],3,1));
+
+fact3 = (repmat([1,0,1],(fact3-3),1))...
+        +(repmat([1,1,1],3,1));
+
+fact4 = (repmat([2,0,1],(fact4-3),1))...
+        +(repmat([2,1,1],3,1));
+
+
+fact1 = fact1(randperm(size(fact1,1)),:);
+fact2 = fact2(randperm(size(fact2,1)),:);
+fact3 = fact3(randperm(size(fact3,1)),:);
+fact4 = fact4(randperm(size(fact4,1)),:);
+
+trials=[]
+for i = length(trialOrder)
+    if trialOrder(i) = 1
+        trials = [trials; fact1(1,:)]
+        fact1[1] = []
+    else if trialOrder(i) = 2
+        trials = [trials; fact2(1,:)]
+        fact2(1) = []
+    else if trialOrder(i) = 3
+        trials = [trials; fact3(1,:)]
+        fact3(1) = []
+    else
+        trials = [trials; fact4(1,:)]
+        fact4(1) = []
 
 
 condNorm = [ ...
@@ -32,7 +71,7 @@ condOB = [ ...
     repmat([2, 1, 0], 3, 1); ...
     repmat([1, 1, 1], 3, 1); ...
     repmat([2, 1, 1], 3, 1); ...
-];    
+    ];
 
 nOddball = size(condOB, 1);
 condOB = condOB(randperm(nOddball), :);
