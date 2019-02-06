@@ -13,84 +13,43 @@ log.interrupt = [];
 %%          Fact 2 = bin for image B, low Contrast
 %%          Fact 3 = bin for image A, High Contrast, OddBall
 %%          Fact 4 = bin for image B, low Contrast, OddBall
-
 trialOrder = carryoverCounterbalance(4,1,7,0);
 
-fact1 = sum(trialOrder(:) == 1);
-fact2 = sum(trialOrder(:) == 2);
-fact3 = sum(trialOrder(:) == 3);
-fact4 = sum(trialOrder(:) == 4);
+% fact1 = sum(trialOrder(:) == 1);
+% fact2 = sum(trialOrder(:) == 2);
+% fact3 = sum(trialOrder(:) == 3);
+% fact4 = sum(trialOrder(:) == 4);
 
-fact1 = (repmat([1,0,0],(sum(trialOrder(4:) == 1)),1))...
-        +(repmat([1,1,0],3,1));
+fact1 = [repmat([1,0,0],(sum(trialOrder(:) == 1)-3),1) ; (repmat([1,1,0],3,1))];
+fact2 = [repmat([2,0,0],(sum(trialOrder(:) == 2)-3),1) ; (repmat([2,1,0],3,1))];
+fact3 = [repmat([1,0,1],(sum(trialOrder(:) == 3)-3),1) ; (repmat([1,1,1],3,1))];
+fact4 = [repmat([2,0,1],(sum(trialOrder(:) == 4)-3),1) ; (repmat([2,1,1],3,1))];
 
-fact2 = (repmat([2,0,0],(fact2-3),1))...
-        +(repmat([2,1,0],3,1));
-
-fact3 = (repmat([1,0,1],(fact3-3),1))...
-        +(repmat([1,1,1],3,1));
-
-fact4 = (repmat([2,0,1],(fact4-3),1))...
-        +(repmat([2,1,1],3,1));
-
-
+%shuffle bins
 fact1 = fact1(randperm(size(fact1,1)),:);
 fact2 = fact2(randperm(size(fact2,1)),:);
 fact3 = fact3(randperm(size(fact3,1)),:);
 fact4 = fact4(randperm(size(fact4,1)),:);
 
-trials=[]
-for i = length(trialOrder)
-    if trialOrder(i) = 1
-        trials = [trials; fact1(1,:)]
-        fact1[1] = []
-    else if trialOrder(i) = 2
-        trials = [trials; fact2(1,:)]
-        fact2(1) = []
-    else if trialOrder(i) = 3
-        trials = [trials; fact3(1,:)]
-        fact3(1) = []
+%create trial list by drawing from bins. order should match trialOrder
+trials=zeros(length(trialOrder),3);
+for i = 1:length(trialOrder)
+
+    if trialOrder(i) == 1
+        trials(i,:) = fact1(1,:);
+        fact1(1,:) = [];
+    elseif trialOrder(i) == 2;
+       trials(i,:) = fact2(1,:);
+       fact2(1,:) = []
+    elseif trialOrder(i) == 3;
+       trials(i,:) = fact3(1,:);
+       fact3(1,:) = []
     else
-        trials = [trials; fact4(1,:)]
-        fact4(1) = []
+       trials(i,:) = fact4(1,:);
+       fact4(1,:) = [];
+    end
 
-
-condNorm = [ ...
-    repmat([1, 0, 0], (fac1 - 3), 1); ...
-    repmat([2, 0, 0], (fac2-3), 1); ...
-    repmat([1, 0, 1], (fac3-3), 1); ...
-    repmat([2, 0, 1], (fac4-3), 1); ...
-];    
-
-nNorm = size(condNorm, 1);
-condNorm = condNorm(randperm(nNorm), :);
-
-% Oddballs
-condOB = [ ...
-    repmat([1, 1, 0], 3, 1); ...
-    repmat([2, 1, 0], 3, 1); ...
-    repmat([1, 1, 1], 3, 1); ...
-    repmat([2, 1, 1], 3, 1); ...
-    ];
-
-nOddball = size(condOB, 1);
-condOB = condOB(randperm(nOddball), :);
-
-% Spread oddballs over normal trials
-nTrial = nNorm + nOddball;
-group = ceil((1:nTrial)*(nOddball/nTrial));
-
-indexOddball = zeros(nOddball, 1);
-for iOddball = 1:nOddball
-    curGroup = find(group==iOddball);
-    indexOddball(iOddball) = curGroup(randi(length(curGroup)));
-end    
-
-% Combine normal and oddball trials
-cond = zeros(nTrial, 2);
-
-cond(setdiff(1:nTrial, indexOddball), :) = condNorm;
-cond(indexOddball, :) = condOB;
+end
 
 %% Initialize
 dataFile = [G.dataPath, 'dataSubj', num2str(G.curSubj), '_', log.datestr, '.mat'];

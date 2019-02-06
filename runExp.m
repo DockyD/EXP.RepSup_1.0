@@ -1,4 +1,4 @@
-f%main script to run experiment
+%main script to run experiment
 clear all;
 
 global G;
@@ -179,7 +179,7 @@ cfg.randomize = 1;
 instructionsMEGpre;
 
 % Iterate over blocks
-G.dataFile = cell(G.nBlock, 1);
+G.dataFile = (G.nBlock, 1);
 G.logFile = cell(G.nBlock, 1);
 
 for iBlock = 1:G.nBlock   
